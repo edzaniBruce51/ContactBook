@@ -26,7 +26,16 @@
 
         <script src="config.js"></script>
         <script>
-            
+            var id = getId();
+            console.log("The id is :" + id);
+
+            function getId(){
+                // javascript property that returns  the full url of the current window that is open.
+                var url = window.location.href;
+                var pos = url.search("=");                   
+                var id = url.slice(pos + 1)
+                return id;
+            }
         </script>
     </body>
 </html>
