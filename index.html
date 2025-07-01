@@ -12,6 +12,7 @@
         <script src="config.js"></script>
         <script>
 
+            document.getElementById("addContact").addEventListener('click', addContact);
             document.getElementById("refresh").addEventListener('click', fecthContacts);
             
             function fecthContacts(){
@@ -38,6 +39,10 @@
                 }
                 output += "</table>";
                 document.getElementById("table").innerHTML = output;
+            }
+
+            function addContact(){
+                Window.open("add-contact.html", "_self");
             }
         </script>
     </body>

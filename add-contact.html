@@ -22,14 +22,43 @@
 
         <script src="config.js"></script>
         <script>
-            function submitForm(e){
+
+            // event listener functions to handle click events.
+            document.getElementById("submitForm").addEventListener('click', submitForm);
+            document.getElementById("homeLink").addEventListener('click', homeLink);
+
+            function submitForm(e){ 
                 e.preventDefault();
 
                 const form = new FormData(document.querySelector('#editForm'));
                 form.append('apiKey', apiKey);
 
-                
+                fetch(rootpath + 'controller/insert-contact/', {
+                    method: 'POST',
+                    headers: {'Accept': 'application/json, *.*'},
+                    body: form
+                })
+                .then(function(response){
+                    return response.text();
+                })
+                .then(function(data){
+                    if(data == "1"){
+                        alert("Contact added.");
+                        // link to home page.
+                        homeLink();
+                    }else{
+                        alert(data);
+                        //Link to home page.
+                        homeLink();
+                    }
+                })
             }
+
+            // javascript function that opens a new window with self to not allow the new window to open on a new window but the already existing tab. 
+            function homeLink(){
+                window.open("index.html", "_self");
+            }
+
         </script>
     </body>
 </html>
