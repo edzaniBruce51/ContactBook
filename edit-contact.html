@@ -27,9 +27,10 @@
         <script src="config.js"></script>
         <script>
             var id = getId();
-            console.log("The id is :" + id);
+            //console.log("The id is :" + id);
             document.getElementById("homeLink").addEventListener('click', homeLink); 
             document.getElementById("editContact").addEventListener('click', editContact);
+            document.getElementById("submitForm").addEventListener('click', submitForm);
 
 
             function getId(){
@@ -48,7 +49,7 @@
                 .then(function(data){
                     // display the contact information.
                     displayOutput(data);
-                    console.log(data);
+                    //console.log(data);
                 })
             }
 
@@ -74,6 +75,34 @@
                 document.getElementById("email").readOnly = false;
                 document.getElementById("avatar").hidden = false;
                 document.getElementById("submitForm").hidden = false;
+            }
+
+            function submitForm(e){
+                e.preventDefault();
+
+                const form = new FormData(document.querySelector("#editForm"));
+                form.append('apiKey', apiKey);
+                form.append('id', id);
+
+                fetch(rootPath + 'controller/edit-contact/', {
+                    method: 'POST',
+                    headers: {'Accept': 'application/json, *.*'},
+                    body: form
+                })
+                .then(function(response){
+                    return response.text();
+                })
+                .then(function(data){
+                    if(data == "1"){
+                        alert("Contact edited.");
+                        // link to home page.
+                        homeLink();
+                    }else{
+                        alert(data);
+                        //Link to home page.
+                        homeLink();
+                    }
+                })
             }
             
         </script>
